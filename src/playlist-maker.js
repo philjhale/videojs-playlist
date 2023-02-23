@@ -3,6 +3,19 @@ import playItem from './play-item';
 import * as autoadvance from './auto-advance';
 
 /**
+ * Remove the poster attribute from the video element tech, if present.
+ *
+ * @param {Object} player The videojs player object
+ */
+const removeNativePoster = (player) => {
+  const tech = player.$('.vjs-tech');
+
+  if (tech) {
+    tech.removeAttribute('poster');
+  }
+};
+
+/**
  * Returns whether a playlist item is an object of any kind, excluding null.
  *
  * @private
@@ -339,6 +352,12 @@ export default function factory(player, initialList, initialIndex = 0) {
         playlist.player_,
         list[playlist.currentIndex_]
       );
+
+      // When playing multiple videos in a playlist the videojs PosterImage will
+      // be hidden using CSS. However, the native poster attribute will briefly
+      // appear while the new source loads. Remove the poster attribute to prevent
+      // this happening.
+      removeNativePoster(player);
 
       return playlist.currentIndex_;
     }
