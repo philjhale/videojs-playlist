@@ -11,7 +11,7 @@ jobs:
       should-skip-job: ${{steps.skip-check.outputs.should_skip}}
     steps:
       - id: skip-check
-        uses: fkirc/skip-duplicate-actions@v2.1.0
+        uses: fkirc/skip-duplicate-actions@v5.3.0
         with:
           github_token: ${{github.token}}
 
